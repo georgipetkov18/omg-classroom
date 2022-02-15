@@ -22,7 +22,7 @@ namespace DataAccessLayer
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //base.OnModelCreating(modelBuilder);
+            
             modelBuilder.Entity<Student>().ToTable("Student");
             modelBuilder.Entity<Teacher>().ToTable("Teacher");
 
