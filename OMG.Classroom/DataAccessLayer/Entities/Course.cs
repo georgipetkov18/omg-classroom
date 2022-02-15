@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace DataAccessLayer.Entities
 {
-    internal class Course
+    public class Course : BaseEntity
     {
+        public string Name { get; set; }
+        public Teacher Teacher { get; set; }
+        public ICollection<User> Students { get; set; }
+        public ICollection<Assignment> Assignments { get; set; }
     }
 }

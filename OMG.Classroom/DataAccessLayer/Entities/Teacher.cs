@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace DataAccessLayer.Entities
 {
-    internal class Grade
+    public class Teacher : User
     {
+        public Guid RoleId { get; set; }
+
+        public Role Role { get; set; }
     }
 }

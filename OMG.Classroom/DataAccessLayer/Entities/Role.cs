@@ -6,7 +6,13 @@ using System.Threading.Tasks;
 
 namespace DataAccessLayer.Entities
 {
-    internal class Role
+    public class Role : BaseEntity
     {
+        public string Name { get; set; }
+
+        //public ICollection<User> Users { get; set; }
+
+        public ICollection<Student> Students { get; set; }
+        public ICollection<Teacher> Teachers { get; set; }
     }
 }
