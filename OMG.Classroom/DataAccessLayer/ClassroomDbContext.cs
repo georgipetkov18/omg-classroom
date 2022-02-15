@@ -17,7 +17,7 @@ namespace DataAccessLayer
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
-            optionsBuilder.UseSqlServer(@"Server=DESKTOP-RNH6753\SQLEXPRESS;Database=OMGClassroom;Trusted_Connection=True;");
+            optionsBuilder.UseSqlServer(@"Server=DESKTOP-AMKKV41\SQLEXPRESS;Database=OMGClassroom;Trusted_Connection=True;");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -32,9 +32,9 @@ namespace DataAccessLayer
                 .HasForeignKey(u => u.StudentId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            //modelBuilder.Entity<Course>()
-            //    .HasMany(c => c.Students)
-            //    .WithMany(s => s.Courses)
+            modelBuilder.Entity<Course>()
+                .HasMany(c => c.Students)
+                .WithMany(s => s.Courses);
 
         }
 
