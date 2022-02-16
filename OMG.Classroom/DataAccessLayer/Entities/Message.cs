@@ -10,7 +10,6 @@ namespace DataAccessLayer.Entities
     public class Message : BaseEntity
     {
         [Required]
-        [MaxLength(255)]
         public string Content { get; set; }
         public DateTime CreatedDate { get; set; }
         public Guid AssignmentId { get; set; }
