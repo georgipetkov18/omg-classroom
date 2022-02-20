@@ -1,4 +1,5 @@
 ﻿using DataAccessLayer.Entities;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,62 +8,11 @@ using System.Threading.Tasks;
 
 namespace DataAccessLayer.Repositories.RoleRepositories
 {
-    public class RoleRepository : IRoleRepository
+    public class RoleRepository : BaseRepository<Role>, IRoleRepository
     {
-        private readonly ClassroomDbContext _dbContext;
-
-        public RoleRepository(ClassroomDbContext context)
+        public RoleRepository(ClassroomDbContext context) : base(context, context.Roles)
         {
-            _dbContext = context;
-        }
 
-        public void Add(Role role)
-        {
-            _dbContext.Roles.Add(role);
-            _dbContext.SaveChanges();
-        }
-
-        public void Delete(Guid id)
-        {
-            Role role = _dbContext.Roles.Find(id);
-            if (role == null)
-            {
-                //Ако нещо подаде невалидно ид - малко се филмирах
-                throw new ArgumentNullException("No such role");
-            }
-            _dbContext.Roles.Remove(role);
-            _dbContext.SaveChanges();
-        }
-
-        public Role Read(Guid id)
-        {
-            Role role = _dbContext.Roles.Find(id);
-            if (role == null)
-            {
-                //Ако нещо подаде невалидно ид - малко се филмирах
-                throw new ArgumentNullException("No such role");
-            }
-            return role;
-        }
-
-        public IQueryable<Role> ReadAll()
-        {
-            return _dbContext.Roles.AsQueryable();
-        }
-
-        public void Update(Role newRole)
-        {
-            _dbContext.Roles.Update(newRole);
-            _dbContext.SaveChanges();
-
-            //Role role = _dbContext.Roles.Find(newRole.Id);
-            //if (role == null)
-            //{
-            //    //Ако нещо подаде невалидно ид - малко се филмирах
-            //    throw new ArgumentNullException("No such role");
-            //}
-            //_dbContext.Entry(role).CurrentValues.SetValues(newRole);
-            //_dbContext.SaveChanges();
         }
     }
 

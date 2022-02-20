@@ -7,12 +7,8 @@ using DataAccessLayer.Entities;
 
 namespace DataAccessLayer.Repositories.CourseRepositories
 {
-    public interface ICourseRepository
+    public interface ICourseRepository : IBaseRepository<Course>
     {
-        void Add(Course course);
-        Course Read(Guid id);
-        IQueryable<Course> ReadAll();
-        void Delete(Guid id);
-        void Update(Course course);
+       
     }
 }
