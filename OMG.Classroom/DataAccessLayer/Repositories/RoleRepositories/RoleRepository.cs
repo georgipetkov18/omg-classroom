@@ -53,6 +53,7 @@ namespace DataAccessLayer.Repositories.RoleRepositories
         public void Update(Role newRole)
         {
             _dbContext.Roles.Update(newRole);
+            _dbContext.SaveChanges();
 
             //Role role = _dbContext.Roles.Find(newRole.Id);
             //if (role == null)
@@ -64,4 +65,5 @@ namespace DataAccessLayer.Repositories.RoleRepositories
             //_dbContext.SaveChanges();
         }
     }
+
 }
