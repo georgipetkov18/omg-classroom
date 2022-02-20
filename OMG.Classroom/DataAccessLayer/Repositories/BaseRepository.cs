@@ -10,28 +10,27 @@ namespace DataAccessLayer.Repositories
 {
     public abstract class BaseRepository<E> where E : BaseEntity
     {
-        public readonly ClassroomDbContext _context;
-        public readonly DbSet<E> _dbSet;
+        protected readonly ClassroomDbContext _context;
+        protected DbSet<E> _dbSet;
 
-        protected BaseRepository(ClassroomDbContext context, DbSet<E> dbSet)
+        protected BaseRepository(ClassroomDbContext context)
         {
-            _context = context;
-            _dbSet = dbSet;
+            _context = context;           
         }
 
-        public async Task Add(E entity)
+        public async Task AddAsync(E entity)
         {
             await _dbSet.AddAsync(entity);
             await _context.SaveChangesAsync();
         }
-        public async Task Update(E entity)
+        public async Task UpdateAsync(E entity)
         {
             _dbSet.Update(entity);
             await _context.SaveChangesAsync();
         }
-        public async Task Delete(Guid id)
+        public async Task DeleteAsync(Guid id)
         {
-            E entity = await _dbSet.FindAsync(id);
+            E entity = await _dbSet.FirstOrDefaultAsync(x => x.Id == id);
             if (entity == null)
             {
                 throw new ArgumentNullException();
@@ -39,13 +38,13 @@ namespace DataAccessLayer.Repositories
             _dbSet.Remove(entity);
             await _context.SaveChangesAsync();
         }
-        public async Task<E> Read(Guid id)
+        public async Task<E> ReadAsync(Guid id)
         {
-            return await _dbSet.FindAsync(id);
+            return await _dbSet.FirstOrDefaultAsync(x => x.Id == id);
         }
-        public async Task<ICollection<E>> ReadAll()
+        public IQueryable<E> ReadAll()
         {
-            return await _dbSet.ToListAsync();
+            return _dbSet.AsQueryable();
         }
     }
 }
