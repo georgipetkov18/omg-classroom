@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DataAccessLayer.Repositories.MessageRepositories
 {
-    public class MessageRepository : BaseRepository<Message> IMessageRepository
+    public class MessageRepository : BaseRepository<Message>, IMessageRepository
     {
         public MessageRepository(ClassroomDbContext context) : base(context)
         {

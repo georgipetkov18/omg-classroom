@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DataAccessLayer.Repositories.AssignmentRepositories
 {
-    public class AssignmentRepository : BaseRepository<Assignment> IAssignmentRepository
+    public class AssignmentRepository : BaseRepository<Assignment>, IAssignmentRepository
     {
         public AssignmentRepository(ClassroomDbContext context) : base(context)
         {
