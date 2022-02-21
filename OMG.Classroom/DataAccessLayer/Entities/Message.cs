@@ -12,8 +12,6 @@ namespace DataAccessLayer.Entities
         public DateTime CreatedDate { get; set; }
         public Guid AssignmentId { get; set; }
         public User Author { get; set; }
-        
-        
         public Assignment Assignment { get; set; }
     }
 }

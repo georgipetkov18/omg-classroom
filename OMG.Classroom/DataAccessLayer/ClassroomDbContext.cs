@@ -17,12 +17,11 @@ namespace DataAccessLayer
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
-            optionsBuilder.UseSqlServer(@"Server=DESKTOP-AMKKV41\SQLEXPRESS;Database=OMGClassroom;Trusted_Connection=True;");
+            optionsBuilder.UseSqlServer(@"Server=DESKTOP-RNH6753\SQLEXPRESS;Database=OMGClassroom;Trusted_Connection=True;");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Student>().ToTable("Student");
             modelBuilder.Entity<Teacher>().ToTable("Teacher");
 
@@ -35,7 +34,6 @@ namespace DataAccessLayer
             modelBuilder.Entity<Course>()
                 .HasMany(c => c.Students)
                 .WithMany(s => s.Courses);
-
         }
 
         public DbSet<Student> Students { get; set; }
