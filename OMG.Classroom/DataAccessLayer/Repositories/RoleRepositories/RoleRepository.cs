@@ -12,7 +12,7 @@ namespace DataAccessLayer.Repositories.RoleRepositories
     {
         public RoleRepository(ClassroomDbContext context) : base(context)
         {
-            base._dbSet = context.Roles;
+          
         }
     }
 

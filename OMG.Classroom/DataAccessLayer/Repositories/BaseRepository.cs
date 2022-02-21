@@ -11,11 +11,12 @@ namespace DataAccessLayer.Repositories
     public abstract class BaseRepository<E> where E : BaseEntity
     {
         protected readonly ClassroomDbContext _context;
-        protected DbSet<E> _dbSet;
+        protected readonly DbSet<E> _dbSet;
 
         protected BaseRepository(ClassroomDbContext context)
         {
-            _context = context;           
+            _context = context;
+            _dbSet = context.Set<E>();
         }
 
         public async Task AddAsync(E entity)

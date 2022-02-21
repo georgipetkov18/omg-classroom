@@ -12,7 +12,7 @@ namespace DataAccessLayer.Repositories.CourseRepositories
     {
         public CourseRepository(ClassroomDbContext context) : base(context)
         {
-            base._dbSet = context.Courses;
+            
         }
     }
 }
