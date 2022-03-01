@@ -1,6 +1,6 @@
 import './App.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import RegisterPage from './pages/Register';
+import RegisterPage from './components/pages/Register';
 import { useState } from 'react';
 
 function App() {
