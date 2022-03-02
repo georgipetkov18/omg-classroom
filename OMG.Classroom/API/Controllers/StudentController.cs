@@ -18,21 +18,21 @@ namespace API.Controllers
             _studentRepository = studentRepository;
         }
         [HttpGet]
-        public async Task<ActionResult<ICollection<Student>>> GetAllAsync()
+        public async Task<IActionResult> GetAllAsync()
         {
-            return await _studentRepository.ReadAll().ToListAsync();
+            return Ok(await _studentRepository.ReadAll().ToListAsync());
         }
-        [HttpGet("id")]
-        public async Task<ActionResult<Student>> GetAsync(Guid id)
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetAsync(Guid id)
         {
             Student? item = await _studentRepository.ReadAsync(id);
             if (item is null)
             {
                return NotFound();
             }
-            return item;
+            return Ok(item);
         }
-        [HttpDelete("id")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAsync(Guid id)
         {
             try
@@ -47,29 +47,23 @@ namespace API.Controllers
             
         }
         [HttpPost]
-        public async Task<ActionResult<Student>> CreateAsync(Student student)
+        public async Task<IActionResult> CreateAsync(Student student)
         {
             //TODO - add mapping and change to ViewModel
             await _studentRepository.AddAsync(student);
             return CreatedAtAction(nameof(GetAsync), new { id = student.Id }, student);
         }
-        [HttpPut("id")]
-        public async Task<ActionResult<Student>> UpdateAsync(Guid id, Student student)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateAsync(Guid id, Student student)
         {
             //TODO - add mapping and change to ViewModel
             if (student.Id != id)
             {
                 return BadRequest();
             }
-            try
-            {
-                await _studentRepository.UpdateAsync(student);
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                return NotFound();
-            }
-
+            
+            //It will throw InternalServerError automatically upon exception
+            await _studentRepository.UpdateAsync(student);
             return NoContent();
         }
     }
