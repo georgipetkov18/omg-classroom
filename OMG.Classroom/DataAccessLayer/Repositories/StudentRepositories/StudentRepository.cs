@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DataAccessLayer.Repositories.StudentRepositories
 {
-    public class StudentRepository : BaseRepository<Student>, IStudentRepositories
+    public class StudentRepository : BaseRepository<Student>, IStudentRepository
     {
         public StudentRepository(ClassroomDbContext context) : base(context)
         {
