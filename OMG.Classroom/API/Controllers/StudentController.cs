@@ -11,7 +11,7 @@ namespace API.Controllers
     [ApiController]
     public class StudentController : ControllerBase
     {
-        //To be changed to service in the future and to DTOs/Models/ViewModels in the Future
+        //To be changed to service in the future and to DTOs/Models in the Future
         private readonly IStudentRepository _studentRepository;
         public StudentController(IStudentRepository studentRepository)
         {
@@ -20,12 +20,13 @@ namespace API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllAsync()
         {
+            //ToList convertion will happen eventually in the servives
             return Ok(await _studentRepository.ReadAll().ToListAsync());
         }
         [HttpGet("{id}")]
         public async Task<IActionResult> GetAsync(Guid id)
         {
-            Student? item = await _studentRepository.ReadAsync(id);
+            var item = await _studentRepository.ReadAsync(id);
             if (item is null)
             {
                return NotFound();
@@ -49,18 +50,14 @@ namespace API.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateAsync(Student student)
         {
-            //TODO - add mapping and change to ViewModel
+            //TODO - add mapping and change to DTOs
             await _studentRepository.AddAsync(student);
-            return CreatedAtAction(nameof(GetAsync), new { id = student.Id }, student);
+            return NoContent();
         }
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateAsync(Guid id, Student student)
         {
-            //TODO - add mapping and change to ViewModel
-            if (student.Id != id)
-            {
-                return BadRequest();
-            }
+            student.Id = id;
             
             //It will throw InternalServerError automatically upon exception
             await _studentRepository.UpdateAsync(student);
