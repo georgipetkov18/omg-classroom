@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DataAccessLayer.Repositories.StudentRepositories
 {
-    public interface IStudentRepositories : IBaseRepository<Student>
+    public interface IStudentRepository : IBaseRepository<Student>
     {
     }
 }
