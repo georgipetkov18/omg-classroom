@@ -11,9 +11,9 @@ namespace API.Controllers
     public class CourseController : ControllerBase
     {
         private readonly ICourseRepository _courseRepository;
-        public CourseController(ICourseRepository studentRepository)
+        public CourseController(ICourseRepository courseRepository)
         {
-            _courseRepository = studentRepository;
+            _courseRepository = courseRepository;
         }
         [HttpGet]
         public async Task<IActionResult> GetAllAsync()

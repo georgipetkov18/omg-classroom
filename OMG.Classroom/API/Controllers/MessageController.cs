@@ -1,5 +1,5 @@
 ﻿using DataAccessLayer.Entities;
-using DataAccessLayer.Repositories.AssignmentRepositories;
+using DataAccessLayer.Repositories.MessageRepositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -8,24 +8,23 @@ namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AssignmentController : ControllerBase
+    public class MessageController : ControllerBase
     {
-
-        private readonly IAssignmentRepository _assignmentRepository;
-        public AssignmentController(IAssignmentRepository assignmentRepository)
+        private readonly IMessageRepository _messageRepository;
+        public MessageController(IMessageRepository messageRepository)
         {
-            _assignmentRepository = assignmentRepository;
+            _messageRepository = messageRepository;
         }
         [HttpGet]
         public async Task<IActionResult> GetAllAsync()
         {
             //ToList convertion will happen eventually in the servives
-            return Ok(await _assignmentRepository.ReadAll().ToListAsync());
+            return Ok(await _messageRepository.ReadAll().ToListAsync());
         }
         [HttpGet("{id}")]
         public async Task<IActionResult> GetAsync(Guid id)
         {
-            var item = await _assignmentRepository.ReadAsync(id);
+            var item = await _messageRepository.ReadAsync(id);
             if (item is null)
             {
                 return NotFound();
@@ -37,7 +36,7 @@ namespace API.Controllers
         {
             try
             {
-                await _assignmentRepository.DeleteAsync(id);
+                await _messageRepository.DeleteAsync(id);
                 return NoContent();
             }
             catch (ArgumentNullException)
@@ -47,19 +46,19 @@ namespace API.Controllers
 
         }
         [HttpPost]
-        public async Task<IActionResult> CreateAsync(Assignment assignment)
+        public async Task<IActionResult> CreateAsync(Message message)
         {
             //TODO - add mapping and change to DTOs
-            await _assignmentRepository.AddAsync(assignment);
+            await _messageRepository.AddAsync(message);
             return NoContent();
         }
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateAsync(Guid id, Assignment assignment)
+        public async Task<IActionResult> UpdateAsync(Guid id, Message message)
         {
-            assignment.Id = id;
+            message.Id = id;
 
             //It will throw InternalServerError automatically upon exception
-            await _assignmentRepository.UpdateAsync(assignment);
+            await _messageRepository.UpdateAsync(message);
             return NoContent();
         }
     }
