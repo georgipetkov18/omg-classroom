@@ -1,19 +1,18 @@
-﻿using System;
+﻿using DataAccessLayer.Entities;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataAccessLayer.Entities
+namespace DataAccessLayer.Dtos.CourseDtos
 {
-    public class Course : BaseEntity
+    public class CourseDtoWithStudentsAndAssignmentsWithId
     {
-        [Required]
-        [MaxLength(50)]
+        public Guid Id { get; set; }
+        public DateTime? DeletedOn { get; set; }
         public string Name { get; set; }
         public Guid TeacherId { get; set; }
-        public Teacher Teacher { get; set; }
         public ICollection<User> Students { get; set; }
         public ICollection<Assignment> Assignments { get; set; }
     }

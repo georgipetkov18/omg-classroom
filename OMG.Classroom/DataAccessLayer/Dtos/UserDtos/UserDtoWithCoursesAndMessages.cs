@@ -1,25 +1,17 @@
-﻿using System;
+﻿using DataAccessLayer.Entities;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataAccessLayer.Entities
+namespace DataAccessLayer.Dtos.UserDtos
 {
-    [NotMapped]
-    public class User : BaseEntity
+    public class UserDtoWithCoursesAndMessages
     {
-        [Required]
-        [MaxLength(50)]
+        public DateTime? DeletedOn { get; set; }
         public string Name { get; set; }
-        [Required]
-        [MaxLength(50)]
-        [EmailAddress]
         public string Email { get; set; }
-        [Required]
-        [MaxLength(50)]
         public string Password { get; set; }
         public int Age { get; set; }
         public ICollection<Course> Courses { get; set; }
