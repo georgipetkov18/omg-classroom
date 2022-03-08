@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace DataAccessLayer.Dtos.AssignmentDtos
 {
-    public class AssignmentDtoWithMessagesWithId
+    public class AssignmentDtoWithCollections
     {
-        public Guid Id { get; set; }
         public DateTime? DeletedOn { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DataAccessLayer.Dtos.CourseDtos
 {
-    public class CourseDtoWithStudentsAndAssignmentsWithId
+    public class CourseDtoWithCollectionsWithId
     {
         public Guid Id { get; set; }
         public DateTime? DeletedOn { get; set; }
