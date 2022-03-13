@@ -1,6 +1,8 @@
 import React, { useState } from "react";
-import CoursesItem from "./CourseItem";
+import CourseItem from "./CourseItem";
 import Card from "../../UI/Card";
+
+import classes from "./Courses.module.css";
 
 const DUNNY_COURSES = [
   {
@@ -34,7 +36,7 @@ const DUNNY_COURSES = [
     id: 4,
     name: "BEL",
     teacher: {
-      name: "Toshka",
+      name: "Tosheva",
     },
     students: [],
     assignments: [],
@@ -54,7 +56,8 @@ const Courses = (props) => {
   const courseList = (
     <ul>
       {courses.map((x) => (
-        <CoursesItem
+        <CourseItem
+          key={x.id}
           name={x.name}
           teacher={x.teacher}
           students={x.students}
@@ -64,7 +67,11 @@ const Courses = (props) => {
     </ul>
   );
 
-  return <Card>{courseList}</Card>;
+  return (
+    <section className={classes.courses}>
+      <Card>{courseList}</Card>
+    </section>
+  );
 };
 
 export default Courses;
