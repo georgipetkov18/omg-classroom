@@ -11,7 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataAccessLayer.MapperProfile
+namespace DataAccessLayer.Mappers
 {
     public class MapperProfile : Profile
     {
