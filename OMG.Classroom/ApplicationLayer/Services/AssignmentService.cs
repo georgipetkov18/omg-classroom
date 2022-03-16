@@ -8,7 +8,7 @@ using DataAccessLayer.Entities;
 using DataAccessLayer.Repositories.AssignmentRepositories;
 using Microsoft.EntityFrameworkCore;
 
-namespace ApplicationLayer.Services//sth
+namespace ApplicationLayer.Services
 {
     public class AssignmentService : IAssignmentService
     {
@@ -18,7 +18,7 @@ namespace ApplicationLayer.Services//sth
         {
             _assignmentRepository = assignmentRepository;
         }
-        public async Task AddAsync(AssignmentDtoWithCollections assignmentDto)
+        public async Task AddAsync(AssignmentDto assignmentDto)
         {
             await _assignmentRepository.AddAsync(assignmentDto);
         }
@@ -28,7 +28,7 @@ namespace ApplicationLayer.Services//sth
             await _assignmentRepository.DeleteAsync(id);
         }
 
-        public async Task<List<AssignmentDtoWithId>> ReadAll()
+        public async Task<List<AssignmentDto>> ReadAllAssync()
         {
             return await _assignmentRepository.ReadAll().ToListAsync();
         }
@@ -38,9 +38,9 @@ namespace ApplicationLayer.Services//sth
             return await _assignmentRepository.ReadAsync(id);
         }
 
-        public async Task UpdateAsync(AssignmentDtoWithCollectionsWithId assignmentDtoWithCollectionsWithId)
+        public async Task UpdateAsync(AssignmentDtoWithId assignmentDto)
         {
-            await _assignmentRepository.UpdateAsync(assignmentDtoWithCollectionsWithId);
+            await _assignmentRepository.UpdateAsync(assignmentDto);
         }
     }
 }
