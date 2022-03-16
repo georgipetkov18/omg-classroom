@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ApplicationLayer.Services.ServiceInterfaces;
+using DataAccessLayer.Dtos.AssignmentDtos;
 using DataAccessLayer.Entities;
 using DataAccessLayer.Repositories.AssignmentRepositories;
 using Microsoft.EntityFrameworkCore;
@@ -18,9 +18,9 @@ namespace ApplicationLayer.Services//sth
         {
             _assignmentRepository = assignmentRepository;
         }
-        public async Task CreateAsync(Assignment assignment)
+        public async Task AddAsync(AssignmentDtoWithCollections assignmentDto)
         {
-            await _assignmentRepository.AddAsync(assignment);
+            await _assignmentRepository.AddAsync(assignmentDto);
         }
 
         public async Task DeleteAsync(Guid id)
@@ -28,19 +28,19 @@ namespace ApplicationLayer.Services//sth
             await _assignmentRepository.DeleteAsync(id);
         }
 
-        public async Task<List<Assignment>> GetAllAsync()
+        public async Task<List<AssignmentDtoWithId>> ReadAll()
         {
             return await _assignmentRepository.ReadAll().ToListAsync();
         }
 
-        public async Task<Assignment> GetAsync(Guid id)
+        public async Task<AssignmentDtoWithId> ReadAsync(Guid id)
         {
             return await _assignmentRepository.ReadAsync(id);
         }
 
-        public async Task UpdateAsync(Assignment assignment)
+        public async Task UpdateAsync(AssignmentDtoWithCollectionsWithId assignmentDtoWithCollectionsWithId)
         {
-            await _assignmentRepository.UpdateAsync(assignment);
+            await _assignmentRepository.UpdateAsync(assignmentDtoWithCollectionsWithId);
         }
     }
 }

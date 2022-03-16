@@ -1,13 +1,13 @@
-﻿using DataAccessLayer.Entities;
+﻿using DataAccessLayer.Dtos.AssignmentDtos;
 
-namespace ApplicationLayer.Services.ServiceInterfaces
+namespace ApplicationLayer.Services
 {
     public interface IAssignmentService
     {
-        Task CreateAsync(Assignment assignment);
+        Task AddAsync(AssignmentDtoWithCollections assignmentDto);
         Task DeleteAsync(Guid id);
-        Task<List<Assignment>> GetAllAsync();
-        Task<Assignment> GetAsync(Guid id);
-        Task UpdateAsync(Assignment assignment);
+        Task<List<AssignmentDtoWithId>> ReadAll();
+        Task<AssignmentDtoWithId> ReadAsync(Guid id);
+        Task UpdateAsync(AssignmentDtoWithCollectionsWithId assignmentDtoWithCollectionsWithId);
     }
 }
