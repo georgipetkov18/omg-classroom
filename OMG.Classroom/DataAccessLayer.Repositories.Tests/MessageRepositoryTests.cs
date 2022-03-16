@@ -47,13 +47,20 @@ namespace DataAccessLayer.Repositories.Tests
         public async Task SeedDataAsync(ClassroomDbContext context)
         {
             await Seed.SeedRolesAsync(context);
+            await Seed.SeedTeachersAsync(context);
+            await Seed.SeedStudentsAsync(context);
+            await Seed.SeedCoursesAsync(context);
+            await Seed.SeedAssignmentsAsync(context);
+            await Seed.SeedMessagesAsync(context);
         }
 
         [Fact]
         public async Task CanAddMessage()
         {
             var newMessage = new Message();
-            //newMessage.Name = "new course";
+
+            newMessage.Content = "new content";
+            newMessage.CreatedDate = DateTime.Now;
 
             await repository.AddAsync(newMessage);
 
@@ -88,7 +95,9 @@ namespace DataAccessLayer.Repositories.Tests
 
             var message = await context.Messages.SingleOrDefaultAsync(x => x.Id == Guid.Parse("f61ae49b-25c1-4e93-add1-4d9787209185"));
 
-            //message.Name = "name changed";
+            message.Content = "content changed";
+            message.CreatedDate = DateTime.Now;
+
             context.Entry(message).State = EntityState.Detached;
 
             await repository.UpdateAsync(message);

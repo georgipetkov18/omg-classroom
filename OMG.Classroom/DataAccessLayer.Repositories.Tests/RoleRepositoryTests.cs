@@ -47,6 +47,11 @@ namespace DataAccessLayer.Repositories.Tests
         public async Task SeedDataAsync(ClassroomDbContext context)
         {
             await Seed.SeedRolesAsync(context);
+            await Seed.SeedTeachersAsync(context);
+            await Seed.SeedStudentsAsync(context);
+            await Seed.SeedCoursesAsync(context);
+            await Seed.SeedAssignmentsAsync(context);
+            await Seed.SeedMessagesAsync(context);
         }
 
         [Fact]

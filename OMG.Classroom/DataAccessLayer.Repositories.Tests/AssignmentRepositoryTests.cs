@@ -48,13 +48,23 @@ namespace DataAccessLayer.Repositories.Tests
         public async Task SeedDataAsync(ClassroomDbContext context)
         {
             await Seed.SeedRolesAsync(context);
+            await Seed.SeedTeachersAsync(context);
+            await Seed.SeedStudentsAsync(context);
+            await Seed.SeedCoursesAsync(context);
+            await Seed.SeedAssignmentsAsync(context);
+            await Seed.SeedMessagesAsync(context);
         }
 
         [Fact]
         public async Task CanAddAssignment()
         {
             var newAssignment = new Assignment();
-            newAssignment.Name = "new role";
+
+            newAssignment.CreatedDate = DateTime.Now;
+            newAssignment.Name = "new assignment";
+            newAssignment.Description = "new description";
+            newAssignment.IsDone = true;
+            newAssignment.Grade = 2;
 
             await repository.AddAsync(newAssignment);
 
@@ -89,7 +99,12 @@ namespace DataAccessLayer.Repositories.Tests
 
             var assignment = await context.Assignments.SingleOrDefaultAsync(x => x.Id == Guid.Parse("f61ae49b-25c1-4e93-add1-4d9787209185"));
 
+            assignment.CreatedDate = DateTime.Now;
             assignment.Name = "name changed";
+            assignment.Description = "description changed";
+            assignment.IsDone = false;
+            assignment.Grade = 3;
+
             context.Entry(assignment).State = EntityState.Detached;
 
             await repository.UpdateAsync(assignment);

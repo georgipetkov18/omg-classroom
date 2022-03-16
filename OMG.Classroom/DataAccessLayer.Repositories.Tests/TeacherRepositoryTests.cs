@@ -47,13 +47,22 @@ namespace DataAccessLayer.Repositories.Tests
         public async Task SeedDataAsync(ClassroomDbContext context)
         {
             await Seed.SeedRolesAsync(context);
+            await Seed.SeedTeachersAsync(context);
+            await Seed.SeedStudentsAsync(context);
+            await Seed.SeedCoursesAsync(context);
+            await Seed.SeedAssignmentsAsync(context);
+            await Seed.SeedMessagesAsync(context);
         }
 
         [Fact]
         public async Task CanAddTeacher()
         {
             var newTeacher = new Teacher();
+
             newTeacher.Name = "new teacher";
+            newTeacher.Email = "new email";
+            newTeacher.Password = "new password";
+            newTeacher.Age = 18;
 
             await repository.AddAsync(newTeacher);
 
@@ -89,6 +98,10 @@ namespace DataAccessLayer.Repositories.Tests
             var teacher = await context.Teachers.SingleOrDefaultAsync(x => x.Id == Guid.Parse("71a7dbfa-6489-4f91-be4e-f9c71c2faafa"));
 
             teacher.Name = "name changed";
+            teacher.Email = "new email";
+            teacher.Password = "new password";
+            teacher.Age = 18;
+
             context.Entry(teacher).State = EntityState.Detached;
 
             await repository.UpdateAsync(teacher);
