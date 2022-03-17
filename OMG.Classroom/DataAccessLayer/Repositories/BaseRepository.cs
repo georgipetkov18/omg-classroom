@@ -8,7 +8,8 @@ using System.Threading.Tasks;
 
 namespace DataAccessLayer.Repositories
 {
-    public abstract class BaseRepository<E> where E : BaseEntity
+    public abstract class BaseRepository<E> : IBaseRepository<E>
+        where E : BaseEntity
     {
         protected readonly ClassroomDbContext _context;
         protected readonly DbSet<E> _dbSet;
@@ -16,7 +17,7 @@ namespace DataAccessLayer.Repositories
         protected BaseRepository(ClassroomDbContext context)
         {
             _context = context;
-            _dbSet = context.Set<E>();
+            _dbSet = _context.Set<E>();
         }
 
         public async Task AddAsync(E entity)

@@ -10,7 +10,7 @@ namespace DataAccessLayer
 {
     public class ClassroomDbContext : DbContext
     {
-        public ClassroomDbContext() : base()
+        public ClassroomDbContext(DbContextOptions<ClassroomDbContext> options) : base(options)
         {
         }
 
