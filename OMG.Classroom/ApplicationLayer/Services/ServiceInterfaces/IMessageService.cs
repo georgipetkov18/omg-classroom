@@ -6,7 +6,7 @@ namespace ApplicationLayer.Services
     {
         Task AddAsync(MessageDto messageDto);
         Task DeleteAsync(Guid id);
-        Task<List<MessageDto>> ReadAllAssync();
+        Task<List<MessageDtoWithId>> ReadAllAsync();
         Task<MessageDtoWithId> ReadAsync(Guid id);
         Task UpdateAsync(MessageDtoWithId messageDto);
     }

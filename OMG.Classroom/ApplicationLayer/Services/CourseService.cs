@@ -28,7 +28,7 @@ namespace ApplicationLayer.Services
             await _courseRepository.DeleteAsync(id);
         }
 
-        public async Task<List<CourseDto>> ReadAllAssync()
+        public async Task<List<CourseDtoWithId>> ReadAllAsync()
         {
             return await _courseRepository.ReadAll().ToListAsync();
         }

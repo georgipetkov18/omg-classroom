@@ -28,7 +28,7 @@ namespace ApplicationLayer.Services
             await _assignmentRepository.DeleteAsync(id);
         }
 
-        public async Task<List<AssignmentDto>> ReadAllAssync()
+        public async Task<List<AssignmentDtoWithId>> ReadAllAsync()
         {
             return await _assignmentRepository.ReadAll().ToListAsync();
         }

@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ApplicationLayer.Services
 {
-    public class TeacherService
+    public class TeacherService : ITeacherService
     {
         private readonly ITeacherRepository _teacherRepository;
 
@@ -28,7 +28,7 @@ namespace ApplicationLayer.Services
             await _teacherRepository.DeleteAsync(id);
         }
 
-        public async Task<List<TeacherDto>> ReadAllAssync()
+        public async Task<List<TeacherDtoWithId>> ReadAllAsync()
         {
             return await _teacherRepository.ReadAll().ToListAsync();
         }

@@ -28,7 +28,7 @@ namespace ApplicationLayer.Services
             await _messageRepository.DeleteAsync(id);
         }
 
-        public async Task<List<MessageDto>> ReadAllAssync()
+        public async Task<List<MessageDtoWithId>> ReadAllAsync()
         {
             return await _messageRepository.ReadAll().ToListAsync();
         }
