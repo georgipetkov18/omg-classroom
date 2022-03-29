@@ -1,4 +1,5 @@
 ﻿using DataAccessLayer.Dtos.CourseDtos;
+using DataAccessLayer.Entities;
 
 namespace ApplicationLayer.Services
 {
@@ -9,5 +10,6 @@ namespace ApplicationLayer.Services
         Task<List<CourseDtoWithId>> ReadAllAsync();
         Task<CourseDtoWithId> ReadAsync(Guid id);
         Task UpdateAsync(CourseDtoWithId courseDto);
+        Task AddCourseAssignmentAsync(Course course, Assignment assignment);
     }
 }

@@ -1,4 +1,7 @@
-﻿using DataAccessLayer.Entities;
+﻿using ApplicationLayer.Services;
+using AutoMapper;
+using DataAccessLayer.Entities;
+using DataAccessLayer.Mappers;
 using DataAccessLayer.Repositories.CourseRepositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -11,6 +14,8 @@ namespace API.Controllers
     public class CourseController : ControllerBase
     {
         private readonly ICourseRepository _courseRepository;
+        private readonly ICourseService _courseService;
+        private readonly IMapper _mapper;
         public CourseController(ICourseRepository courseRepository)
         {
             _courseRepository = courseRepository;
@@ -59,6 +64,13 @@ namespace API.Controllers
 
             //It will throw InternalServerError automatically upon exception
             await _courseRepository.UpdateAsync(course);
+            return NoContent();
+        }
+        [HttpPut("{courseId}")]
+        public async Task<IActionResult> AddCourseAssignment(Guid courseId, Assignment assignment)
+        {
+            Course course = _mapper.Map<Course>(await _courseService.ReadAsync(courseId));
+            await _courseService.AddCourseAssignmentAsync(course, assignment);
             return NoContent();
         }
     }
