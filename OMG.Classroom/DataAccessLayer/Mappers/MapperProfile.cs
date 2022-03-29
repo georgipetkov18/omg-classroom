@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using DataAccessLayer.Dtos.AssignmentDtos;
+using DataAccessLayer.Dtos.AuthenticationDTOs;
 using DataAccessLayer.Dtos.CourseDtos;
 using DataAccessLayer.Dtos.MessageDtos;
 using DataAccessLayer.Dtos.StudentDtos;
@@ -37,6 +38,8 @@ namespace DataAccessLayer.Mappers
 
             CreateMap<TeacherDto, Teacher>().ReverseMap();
             CreateMap<TeacherDtoWithId, Teacher>().ReverseMap();
+
+            CreateMap<UserDTO, User>().ReverseMap();
         }
     }
 }

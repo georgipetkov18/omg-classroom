@@ -1,4 +1,5 @@
-﻿using DataAccessLayer.Entities;
+﻿using API.Helpers;
+using DataAccessLayer.Entities;
 using DataAccessLayer.Repositories.CourseRepositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -8,6 +9,7 @@ namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class CourseController : ControllerBase
     {
         private readonly ICourseRepository _courseRepository;
