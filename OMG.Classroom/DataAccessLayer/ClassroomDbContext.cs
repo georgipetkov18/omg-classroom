@@ -22,7 +22,6 @@ namespace DataAccessLayer
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            
             modelBuilder.Entity<Student>().ToTable("Student");
             modelBuilder.Entity<Teacher>().ToTable("Teacher");
 
@@ -43,7 +42,6 @@ namespace DataAccessLayer
             modelBuilder.Entity<Course>()
                 .HasMany(c => c.Students)
                 .WithMany(s => s.Courses);
-
         }
 
         //Overriden SaveChanges methods to suppress hard delete in favor of soft delete

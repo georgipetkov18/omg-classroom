@@ -15,8 +15,6 @@ namespace DataAccessLayer.Entities
         public Guid AssignmentId { get; set; }
         public Guid AuthorId { get; set; }
         public User Author { get; set; }
-        
-        
         public Assignment Assignment { get; set; }
     }
 }
