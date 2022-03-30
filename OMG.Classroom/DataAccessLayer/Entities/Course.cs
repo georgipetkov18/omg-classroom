@@ -12,6 +12,7 @@ namespace DataAccessLayer.Entities
         [Required]
         [MaxLength(50)]
         public string Name { get; set; }
+        public Guid TeacherId { get; set; }
         public Teacher Teacher { get; set; }
         public ICollection<User> Students { get; set; }
         public ICollection<Assignment> Assignments { get; set; }

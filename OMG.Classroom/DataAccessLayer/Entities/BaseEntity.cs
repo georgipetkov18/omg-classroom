@@ -11,6 +11,6 @@ namespace DataAccessLayer.Entities
     {
         [Key]
         public Guid Id { get; set; }
-
+        public DateTime? DeletedOn { get; set; }
     }
 }

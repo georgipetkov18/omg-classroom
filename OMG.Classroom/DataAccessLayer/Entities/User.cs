@@ -23,6 +23,6 @@ namespace DataAccessLayer.Entities
         public string Password { get; set; }
         public int Age { get; set; }
         public ICollection<Course> Courses { get; set; }
-        public ICollection<Message> Message { get; set; }
+        public ICollection<Message> Messages { get; set; }
     }
 }
