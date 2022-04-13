@@ -1,4 +1,6 @@
-﻿using DataAccessLayer;
+﻿using ApplicationLayer.Services;
+using DataAccessLayer;
+using DataAccessLayer.Dtos.StudentDtos;
 using DataAccessLayer.Entities;
 using DataAccessLayer.Repositories.StudentRepositories;
 using Microsoft.AspNetCore.Http;
@@ -12,21 +14,22 @@ namespace API.Controllers
     public class StudentController : ControllerBase
     {
         //To be changed to service in the future and to DTOs/Models in the Future
-        private readonly IStudentRepository _studentRepository;
-        public StudentController(IStudentRepository studentRepository)
+        private readonly IStudentService service;
+        public StudentController(IStudentService service)
         {
-            _studentRepository = studentRepository;
+            this.service = service;
         }
+
         [HttpGet]
         public async Task<IActionResult> GetAllAsync()
         {
             //ToList convertion will happen eventually in the servives
-            return Ok(await _studentRepository.ReadAll().ToListAsync());
+            return Ok(await service.ReadAllAsync());
         }
         [HttpGet("{id}")]
         public async Task<IActionResult> GetAsync(Guid id)
         {
-            var item = await _studentRepository.ReadAsync(id);
+            var item = await service.ReadAsync(id);
             if (item is null)
             {
                return NotFound();
@@ -38,7 +41,7 @@ namespace API.Controllers
         {
             try
             {
-                await _studentRepository.DeleteAsync(id);
+                await service.DeleteAsync(id);
                 return NoContent();
             }
             catch (ArgumentNullException)
@@ -48,19 +51,19 @@ namespace API.Controllers
             
         }
         [HttpPost]
-        public async Task<IActionResult> CreateAsync(Student student)
+        public async Task<IActionResult> CreateAsync(StudentDto studentDto)
         {
             //TODO - add mapping and change to DTOs
-            await _studentRepository.AddAsync(student);
+            await service.AddAsync(studentDto);
             return NoContent();
         }
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateAsync(Guid id, Student student)
+        public async Task<IActionResult> UpdateAsync(Guid id, StudentDtoWithId studentDto)
         {
-            student.Id = id;
+            studentDto.Id = id;
             
             //It will throw InternalServerError automatically upon exception
-            await _studentRepository.UpdateAsync(student);
+            await service.UpdateAsync(studentDto);
             return NoContent();
         }
     }

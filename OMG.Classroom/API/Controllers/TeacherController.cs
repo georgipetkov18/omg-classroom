@@ -1,4 +1,6 @@
-﻿using DataAccessLayer.Entities;
+﻿using ApplicationLayer.Services;
+using DataAccessLayer.Dtos.TeacherDtos;
+using DataAccessLayer.Entities;
 using DataAccessLayer.Repositories.TeacherRepositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -10,20 +12,21 @@ namespace API.Controllers
     [ApiController]
     public class TeacherController : ControllerBase
     {
-        private readonly ITeacherRepository _teacherRepository;
-        public TeacherController(ITeacherRepository teacherRepository)
+        private readonly ITeacherService service;
+        public TeacherController(ITeacherService service)
         {
-            _teacherRepository = teacherRepository;
+            this.service = service;
         }
+
         [HttpGet]
         public async Task<IActionResult> GetAllAsync()
         {
-            return Ok(await _teacherRepository.ReadAll().ToListAsync());
+            return Ok(await service.ReadAllAsync());
         }
         [HttpGet("{id}")]
         public async Task<IActionResult> GetAsync(Guid id)
         {
-            var teacher = await _teacherRepository.ReadAsync(id);
+            var teacher = await service.ReadAsync(id);
             if(teacher==null)
             {
                 return NotFound();
@@ -35,7 +38,7 @@ namespace API.Controllers
         {
             try
             {
-                await _teacherRepository.DeleteAsync(id);
+                await service.DeleteAsync(id);
                 return NoContent();
             }
             catch (ArgumentNullException)
@@ -45,19 +48,19 @@ namespace API.Controllers
 
         }
         [HttpPost]
-        public async Task<IActionResult> CreateAsync(Teacher teacher)
+        public async Task<IActionResult> CreateAsync(TeacherDto teacherDto)
         {
             //TODO - add mapping and change to DTOs
-            await _teacherRepository.AddAsync(teacher);
+            await service.AddAsync(teacherDto);
             return NoContent();
         }
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateAsync(Guid id, Teacher teacher)
+        public async Task<IActionResult> UpdateAsync(Guid id, TeacherDtoWithId teacherDto)
         {
-            teacher.Id = id;
+            teacherDto.Id = id;
 
             //It will throw InternalServerError automatically upon exception
-            await _teacherRepository.UpdateAsync(teacher);
+            await service.UpdateAsync(teacherDto);
             return NoContent();
         }
     }

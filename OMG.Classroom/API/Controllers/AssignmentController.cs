@@ -1,4 +1,6 @@
-﻿using DataAccessLayer.Entities;
+﻿using ApplicationLayer.Services;
+using DataAccessLayer.Dtos.AssignmentDtos;
+using DataAccessLayer.Entities;
 using DataAccessLayer.Repositories.AssignmentRepositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -10,22 +12,23 @@ namespace API.Controllers
     [ApiController]
     public class AssignmentController : ControllerBase
     {
-
-        private readonly IAssignmentRepository _assignmentRepository;
-        public AssignmentController(IAssignmentRepository assignmentRepository)
+        private readonly IAssignmentService service;
+        public AssignmentController(IAssignmentService service)
         {
-            _assignmentRepository = assignmentRepository;
+            this.service = service;
         }
+        
+
         [HttpGet]
         public async Task<IActionResult> GetAllAsync()
         {
             //ToList convertion will happen eventually in the servives
-            return Ok(await _assignmentRepository.ReadAll().ToListAsync());
+            return Ok(await service.ReadAllAsync());
         }
         [HttpGet("{id}")]
         public async Task<IActionResult> GetAsync(Guid id)
         {
-            var item = await _assignmentRepository.ReadAsync(id);
+            var item = await service.ReadAsync(id);
             if (item is null)
             {
                 return NotFound();
@@ -37,7 +40,7 @@ namespace API.Controllers
         {
             try
             {
-                await _assignmentRepository.DeleteAsync(id);
+                await service.DeleteAsync(id);
                 return NoContent();
             }
             catch (ArgumentNullException)
@@ -47,19 +50,19 @@ namespace API.Controllers
 
         }
         [HttpPost]
-        public async Task<IActionResult> CreateAsync(Assignment assignment)
+        public async Task<IActionResult> CreateAsync(AssignmentDto assignmentDto)
         {
             //TODO - add mapping and change to DTOs
-            await _assignmentRepository.AddAsync(assignment);
+            await service.AddAsync(assignmentDto);
             return NoContent();
         }
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateAsync(Guid id, Assignment assignment)
+        public async Task<IActionResult> UpdateAsync(Guid id, AssignmentDtoWithId assignmentDto)
         {
-            assignment.Id = id;
+            assignmentDto.Id = id;
 
             //It will throw InternalServerError automatically upon exception
-            await _assignmentRepository.UpdateAsync(assignment);
+            await service.UpdateAsync(assignmentDto);
             return NoContent();
         }
     }

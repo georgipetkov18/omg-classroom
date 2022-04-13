@@ -1,4 +1,6 @@
-﻿using DataAccessLayer.Entities;
+﻿using ApplicationLayer.Services;
+using DataAccessLayer.Dtos.MessageDtos;
+using DataAccessLayer.Entities;
 using DataAccessLayer.Repositories.MessageRepositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -10,21 +12,22 @@ namespace API.Controllers
     [ApiController]
     public class MessageController : ControllerBase
     {
-        private readonly IMessageRepository _messageRepository;
-        public MessageController(IMessageRepository messageRepository)
+        private readonly IMessageService service;
+        public MessageController(IMessageService service)
         {
-            _messageRepository = messageRepository;
+            this.service = service;
         }
+
         [HttpGet]
         public async Task<IActionResult> GetAllAsync()
         {
             //ToList convertion will happen eventually in the servives
-            return Ok(await _messageRepository.ReadAll().ToListAsync());
+            return Ok(await service.ReadAllAsync());
         }
         [HttpGet("{id}")]
         public async Task<IActionResult> GetAsync(Guid id)
         {
-            var item = await _messageRepository.ReadAsync(id);
+            var item = await service.ReadAsync(id);
             if (item is null)
             {
                 return NotFound();
@@ -36,7 +39,7 @@ namespace API.Controllers
         {
             try
             {
-                await _messageRepository.DeleteAsync(id);
+                await service.DeleteAsync(id);
                 return NoContent();
             }
             catch (ArgumentNullException)
@@ -46,19 +49,19 @@ namespace API.Controllers
 
         }
         [HttpPost]
-        public async Task<IActionResult> CreateAsync(Message message)
+        public async Task<IActionResult> CreateAsync(MessageDto messageDto)
         {
             //TODO - add mapping and change to DTOs
-            await _messageRepository.AddAsync(message);
+            await service.AddAsync(messageDto);
             return NoContent();
         }
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateAsync(Guid id, Message message)
+        public async Task<IActionResult> UpdateAsync(Guid id, MessageDtoWithId messageDto)
         {
-            message.Id = id;
+            messageDto.Id = id;
 
             //It will throw InternalServerError automatically upon exception
-            await _messageRepository.UpdateAsync(message);
+            await service.UpdateAsync(messageDto);
             return NoContent();
         }
     }

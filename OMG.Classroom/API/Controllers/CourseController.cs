@@ -1,4 +1,6 @@
-﻿using DataAccessLayer.Entities;
+﻿using ApplicationLayer.Services;
+using DataAccessLayer.Dtos.CourseDtos;
+using DataAccessLayer.Entities;
 using DataAccessLayer.Repositories.CourseRepositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -10,21 +12,22 @@ namespace API.Controllers
     [ApiController]
     public class CourseController : ControllerBase
     {
-        private readonly ICourseRepository _courseRepository;
-        public CourseController(ICourseRepository courseRepository)
+        private readonly ICourseService service;
+        public CourseController(ICourseService service)
         {
-            _courseRepository = courseRepository;
+            this.service = service;
         }
+
         [HttpGet]
         public async Task<IActionResult> GetAllAsync()
         {
             //ToList convertion will happen eventually in the servives
-            return Ok(await _courseRepository.ReadAll().ToListAsync());
+            return Ok(await service.ReadAllAsync());
         }
         [HttpGet("{id}")]
         public async Task<IActionResult> GetAsync(Guid id)
         {
-            var item = await _courseRepository.ReadAsync(id);
+            var item = await service.ReadAsync(id);
             if (item is null)
             {
                 return NotFound();
@@ -36,7 +39,7 @@ namespace API.Controllers
         {
             try
             {
-                await _courseRepository.DeleteAsync(id);
+                await service.DeleteAsync(id);
                 return NoContent();
             }
             catch (ArgumentNullException)
@@ -46,19 +49,19 @@ namespace API.Controllers
 
         }
         [HttpPost]
-        public async Task<IActionResult> CreateAsync(Course course)
+        public async Task<IActionResult> CreateAsync(CourseDto course)
         {
             //TODO - add mapping and change to DTOs
-            await _courseRepository.AddAsync(course);
+            await service.AddAsync(course);
             return NoContent();
         }
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateAsync(Guid id, Course course)
+        public async Task<IActionResult> UpdateAsync(Guid id, CourseDtoWithId courseDto)
         {
-            course.Id = id;
+            courseDto.Id = id;
 
             //It will throw InternalServerError automatically upon exception
-            await _courseRepository.UpdateAsync(course);
+            await service.UpdateAsync(courseDto);
             return NoContent();
         }
     }
