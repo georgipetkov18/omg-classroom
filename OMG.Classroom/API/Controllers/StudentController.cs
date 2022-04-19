@@ -1,4 +1,5 @@
-﻿using DataAccessLayer;
+﻿using API.Helpers;
+using DataAccessLayer;
 using DataAccessLayer.Entities;
 using DataAccessLayer.Repositories.CourseRepositories;
 using DataAccessLayer.Repositories.StudentRepositories;
@@ -11,6 +12,7 @@ namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class StudentController : ControllerBase
     {
         //To be changed to service in the future and to DTOs/Models in the Future
